@@ -4,6 +4,7 @@
     <string name="about_title">Sobre o aplicativo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="reseverdProduct">Produto reservado com sucesso!</string>
+    <string name="reseverd_product">Produto reservado com sucesso!</string>
     <string name="OK">OK</string>
+    <string name="developer_name">Wesley Alberto Marra</string>
 </resources>

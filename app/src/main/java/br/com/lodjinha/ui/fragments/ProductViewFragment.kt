@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.FragmentProductViewBinding
 import br.com.lodjinha.ui.NavigationDelegate
 import br.com.lodjinha.utils.DialogUtils
 import coil.load
-import coil.transform.CircleCropTransformation
 
 class ProductViewFragment: Fragment() {
 
@@ -64,7 +62,7 @@ class ProductViewFragment: Fragment() {
         }
 
         _binding?.onReserve?.setOnClickListener {
-            DialogUtils.showDialog(context, getString(R.string.reseverdProduct)) {}
+            DialogUtils.showDialog(context, getString(R.string.reseverd_product)) {}
         }
     }
 
