@@ -19,6 +19,6 @@ class AboutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding?.tvDevelopedDate?.text = DateUtils.formatDateTime(context, 1561154935000, DateUtils.FORMAT_SHOW_YEAR)
+        _binding?.tvDevelopedDate?.text = DateUtils.formatDateTime(context, 1636782843220, DateUtils.FORMAT_SHOW_YEAR)
     }
 }
