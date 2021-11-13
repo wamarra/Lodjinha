@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
+import br.com.lodjinha.R
 import br.com.lodjinha.api.RetrofitInstance
 import br.com.lodjinha.databinding.FragmentHomeBinding
 import br.com.lodjinha.repositories.LodjinhaRepository
@@ -17,6 +18,8 @@ import br.com.lodjinha.ui.adapters.ProductsAdapter
 import br.com.lodjinha.ui.viewmodels.MainViewModel
 import br.com.lodjinha.ui.viewmodels.MainViewModelProviderFactory
 import br.com.lodjinha.utils.toggleVisibilty
+import coil.load
+import coil.transform.CircleCropTransformation
 
 class HomeFragment : Fragment() {
 
@@ -66,6 +69,19 @@ class HomeFragment : Fragment() {
         binding.maisVendidosRv.adapter = maisVendidosAdapter
         maisVendidosAdapter.setOnItemClickListener { produtoResponse ->
             println(produtoResponse)
+
+            findNavController().navigate(
+                HomeFragmentDirections.actionMainFragmentToProductViewFragment(
+                    title = produtoResponse.nome,
+                    productId = produtoResponse.id,
+                    tvProductCategory = produtoResponse.categoria.descricao,
+                    tvProdcutName = produtoResponse.nome,
+                    tvProductPrice2 = produtoResponse.precoPor.toString(),
+                    tvProductPriceFrom2 = produtoResponse.precoDe.toString(),
+                    tvProductDescription = produtoResponse.descricao,
+                    urlImagem = produtoResponse.urlImagem
+                )
+            )
         }
     }
 
