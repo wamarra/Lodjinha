@@ -10,4 +10,6 @@
     <dimen name="textsize_xsmall">11sp</dimen>
     <dimen name="textsize_xxsmall">10sp</dimen>
 
+    <dimen name="nav_header_height">245dp</dimen>
+
 </resources>
