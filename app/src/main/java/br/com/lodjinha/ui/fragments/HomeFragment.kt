@@ -17,9 +17,13 @@ import br.com.lodjinha.ui.adapters.CategoriasAdapter
 import br.com.lodjinha.ui.adapters.ProductsAdapter
 import br.com.lodjinha.ui.viewmodels.MainViewModel
 import br.com.lodjinha.ui.viewmodels.MainViewModelProviderFactory
+import br.com.lodjinha.utils.DialogUtils
 import br.com.lodjinha.utils.toggleVisibilty
 import coil.load
 import coil.transform.CircleCropTransformation
+import android.content.Intent
+import android.net.Uri
+
 
 class HomeFragment : Fragment() {
 
@@ -106,7 +110,7 @@ class HomeFragment : Fragment() {
                     binding.progress.toggleVisibilty(true)
                 }
                 viewState.error -> {
-                    // TODO Criar placeholder caso de erro
+                    DialogUtils.showDialog(context, getString(R.string.erro_loading_data)) {}
                 }
                 viewState.data != null -> {
                     binding.progress.toggleVisibilty(false)
@@ -137,6 +141,10 @@ class HomeFragment : Fragment() {
         binding.indicator.attachToRecyclerView(binding.rvBanner)
         bannerAdapter.setOnItemClickListener { banner ->
             println("Teste $banner")
+            val url = "https://scene.zeplin.io/project/589b3ef2dba1a0801d3f1be1"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
         }
     }
 

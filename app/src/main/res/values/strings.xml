@@ -7,4 +7,6 @@
     <string name="reseverd_product">Produto reservado com sucesso!</string>
     <string name="OK">OK</string>
     <string name="developer_name">Wesley Alberto Marra</string>
+    <string name="erro_loading_image">Erro ao carregar imagem</string>
+    <string name="erro_loading_data">Erro ao carregar os dados</string>
 </resources>

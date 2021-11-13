@@ -56,7 +56,7 @@ class ProductViewFragment: Fragment() {
                 error(R.drawable.ic_info)
 
                 listener(onError = {request, throwable ->
-                    println(throwable)
+                    DialogUtils.showDialog(context, getString(R.string.erro_loading_image)) {}
                 })
             }
         }
