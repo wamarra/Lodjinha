@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
-import br.com.lodjinha.R
 import br.com.lodjinha.api.RetrofitInstance
 import br.com.lodjinha.databinding.FragmentHomeBinding
 import br.com.lodjinha.repositories.LodjinhaRepository
@@ -19,8 +18,6 @@ import br.com.lodjinha.ui.viewmodels.MainViewModel
 import br.com.lodjinha.ui.viewmodels.MainViewModelProviderFactory
 import br.com.lodjinha.utils.DialogUtils
 import br.com.lodjinha.utils.toggleVisibilty
-import coil.load
-import coil.transform.CircleCropTransformation
 import android.content.Intent
 import android.net.Uri
 
@@ -61,11 +58,6 @@ class HomeFragment : Fragment() {
         setupObservers()
 
         viewModel.getMainHomeData()
-
-//        viewModel.getCategories()
-//
-//        viewModel.getMaisVendidos()
-
     }
 
     private fun setupMaisVendidosRv() {
@@ -110,7 +102,10 @@ class HomeFragment : Fragment() {
                     binding.progress.toggleVisibilty(true)
                 }
                 viewState.error -> {
-                    DialogUtils.showDialog(context, getString(R.string.erro_loading_data)) {}
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionMainFragmentToErrorFragment()
+                    )
+                    //DialogUtils.showDialog(context, getString(R.string.erro_loading_data)) {}
                 }
                 viewState.data != null -> {
                     binding.progress.toggleVisibilty(false)
