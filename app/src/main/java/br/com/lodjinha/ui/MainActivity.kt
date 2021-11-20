@@ -1,19 +1,21 @@
 package br.com.lodjinha.ui
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.ActivityMainBinding
+import android.view.MenuItem
+import android.widget.SearchView
 
 interface NavigationDelegate {
     fun setToolbarTitle(title: String)
 }
 
-
-class MainActivity : AppCompatActivity(), NavigationDelegate {
+class MainActivity : AppCompatActivity(), NavigationDelegate, SearchView.OnQueryTextListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -46,7 +48,6 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
                 }
             }
 
-
             when(destination.id) {
                 R.id.mainFragment -> {
                     binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -65,5 +66,23 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
 
     override fun setToolbarTitle(title: String) {
         binding.topAppBar.title = title
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        val searchItem: MenuItem = menu!!.findItem(R.id.action_search)
+        val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+
+        return true
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return false
     }
 }
