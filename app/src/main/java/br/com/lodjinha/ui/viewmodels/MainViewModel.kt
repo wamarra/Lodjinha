@@ -13,7 +13,6 @@ import br.com.lodjinha.ui.viewstates.HomeViewState
 import br.com.lodjinha.utils.ResponseWrapper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import kotlin.system.measureTimeMillis
 
 class MainViewModel(

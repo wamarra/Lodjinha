@@ -1,12 +1,10 @@
 package br.com.lodjinha.repositories
 
 import br.com.lodjinha.api.LodjinhaService
-import br.com.lodjinha.api.SafeApiCall
 import br.com.lodjinha.models.GetBannerResponse
 import br.com.lodjinha.models.GetCategoriaResponse
 import br.com.lodjinha.models.GetMaisVendidosResponse
 import br.com.lodjinha.utils.ResponseWrapper
-import retrofit2.Response
 
 class LodjinhaRepository(
     private val service: LodjinhaService
