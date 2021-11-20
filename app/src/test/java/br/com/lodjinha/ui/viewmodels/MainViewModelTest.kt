@@ -92,7 +92,7 @@ class MainViewModelTest {
             }
 
             assertThat(result[0].loading).isTrue()
-            assertThat(result[1].error).isNotNull()
+            assertThat(result[1].data).isNotNull()
 
         }
     }
