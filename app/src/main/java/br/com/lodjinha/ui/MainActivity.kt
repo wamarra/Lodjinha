@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.ActivityMainBinding
 import android.view.MenuItem
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 
 interface NavigationDelegate {
     fun setToolbarTitle(title: String)
