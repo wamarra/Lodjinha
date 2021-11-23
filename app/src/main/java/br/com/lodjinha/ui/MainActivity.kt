@@ -1,34 +1,53 @@
 package br.com.lodjinha.ui
 
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.ActivityMainBinding
-import android.view.MenuItem
+import android.widget.ListView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+
 
 interface NavigationDelegate {
     fun setToolbarTitle(title: String)
 }
 
-class MainActivity : AppCompatActivity(), NavigationDelegate, SearchView.OnQueryTextListener {
+class MainActivity : AppCompatActivity(), NavigationDelegate {
 
     private lateinit var binding: ActivityMainBinding
 
     private val navigator by lazy { findNavController(R.id.nav_host_fragment) }
 
+    var searchView: SearchView? = null
+    var listView: ListView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupNavigationView()
 
         setupNavigation()
+
+        searchView = findViewById(R.id.action_search)
+
+        listView = findViewById(R.id.lv1);
+
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false;
+            }
+        })
     }
 
     private fun setupNavigation() {
@@ -66,23 +85,5 @@ class MainActivity : AppCompatActivity(), NavigationDelegate, SearchView.OnQuery
 
     override fun setToolbarTitle(title: String) {
         binding.topAppBar.title = title
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-
-        val searchItem: MenuItem = menu!!.findItem(R.id.action_search)
-        val searchView: SearchView = searchItem.actionView as SearchView
-        searchView.setOnQueryTextListener(this)
-
-        return true
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return false
     }
 }
