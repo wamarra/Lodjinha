@@ -8,8 +8,6 @@ import androidx.navigation.ui.setupWithNavController
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.ActivityMainBinding
 import android.widget.ListView
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 
 
