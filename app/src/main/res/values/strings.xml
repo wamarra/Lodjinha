@@ -12,4 +12,6 @@
     <string name="erro_loading_image">Erro ao carregar imagem</string>
     <string name="erro_loading_data">Erro ao carregar os dados</string>
     <string name="action_search">Procurar</string>
+    <string name="open_bottom_sheet_title">Abrir opções de filtragem</string>
+    <string name="content_description_bottom_sheet">Abrir opções de filtragem</string>
 </resources>

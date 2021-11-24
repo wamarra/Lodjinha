@@ -45,14 +45,22 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
                 }
             }
 
+            binding.topAppBar.menu.findItem(R.id.filter).apply {
+                isVisible = false
+            }
+
             when(destination.id) {
                 R.id.mainFragment -> {
                     binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 }
+                R.id.productsListFragment -> {
+                    binding.topAppBar.menu.findItem(R.id.filter).apply {
+                        isVisible = true
+                    }
+                }
                 else -> {
                 }
             }
-
         }
     }
 
