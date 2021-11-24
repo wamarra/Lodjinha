@@ -64,7 +64,6 @@ class HomeFragment : Fragment() {
         maisVendidosAdapter = ProductsAdapter()
         binding.maisVendidosRv.adapter = maisVendidosAdapter
         maisVendidosAdapter.setOnItemClickListener { produtoResponse ->
-            println(produtoResponse)
 
             findNavController().navigate(
                 HomeFragmentDirections.actionMainFragmentToProductViewFragment(

@@ -6,8 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import br.com.lodjinha.api.RetrofitInstance
 import br.com.lodjinha.databinding.FragmentProductsListBinding
+import br.com.lodjinha.repositories.LodjinhaRepository
 import br.com.lodjinha.ui.NavigationDelegate
+import br.com.lodjinha.ui.adapters.ProductsCategoryAdapter
+import br.com.lodjinha.ui.viewmodels.ProductCategoryViewModel
+import br.com.lodjinha.ui.viewmodels.ProductCategoryViewModelProviderFactory
+import br.com.lodjinha.utils.toggleVisibilty
 
 class ProductsListFragment : Fragment() {
 
@@ -16,6 +24,14 @@ class ProductsListFragment : Fragment() {
 
     private val args: ProductsListFragmentArgs by lazy {
         ProductsListFragmentArgs.fromBundle(requireArguments())
+    }
+
+    private lateinit var productsCategoryAdapter: ProductsCategoryAdapter
+
+    private val viewModel: ProductCategoryViewModel by lazy {
+        val repository = LodjinhaRepository(RetrofitInstance.apiService)
+        val viewModelProviderFactory = ProductCategoryViewModelProviderFactory(repository)
+        ViewModelProvider(this, viewModelProviderFactory).get(ProductCategoryViewModel::class.java)
     }
 
     private var listener: NavigationDelegate? = null
@@ -39,6 +55,52 @@ class ProductsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         listener?.setToolbarTitle(args.title)
+        setupProductList()
+        setupObservers()
+        viewModel.getProductsByCategoryData(args.categoryId)
+    }
+
+    private fun setupProductList() {
+        productsCategoryAdapter = ProductsCategoryAdapter()
+        binding.produtosRv.adapter = productsCategoryAdapter
+        productsCategoryAdapter.setOnItemClickListener { productsCategoryResponse ->
+
+            findNavController().navigate(
+                ProductsListFragmentDirections.actionProductsListFragmentToProductViewFragment(
+                    title = productsCategoryResponse.nome,
+                    productId = productsCategoryResponse.id,
+                    tvProductCategory = productsCategoryResponse.categoria.descricao,
+                    tvProdcutName = productsCategoryResponse.nome,
+                    tvProductPrice2 = productsCategoryResponse.precoPor.toString(),
+                    tvProductPriceFrom2 = productsCategoryResponse.precoDe.toString(),
+                    tvProductDescription = productsCategoryResponse.descricao,
+                    urlImagem = productsCategoryResponse.urlImagem
+                )
+            )
+        }
+    }
+
+    private fun setupObservers() {
+        viewModel.productCategoryDataLiveData.observe(viewLifecycleOwner) { viewState ->
+            when {
+                viewState.loading -> {
+                    binding.produtosRv.toggleVisibilty(false)
+                    binding.progress.toggleVisibilty(true)
+                }
+                viewState.error -> {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionMainFragmentToErrorFragment()
+                    )
+                }
+                viewState.data != null -> {
+                    binding.progress.toggleVisibilty(false)
+                    binding.produtosRv.toggleVisibilty(true)
+                    if (viewState.data?.productsCategoryData.isNullOrEmpty().not()) {
+                        productsCategoryAdapter.differ.submitList(viewState.data?.productsCategoryData)
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

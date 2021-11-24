@@ -7,8 +7,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.ActivityMainBinding
-import android.widget.ListView
-import androidx.appcompat.widget.SearchView
 
 
 interface NavigationDelegate {
@@ -21,9 +19,6 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
 
     private val navigator by lazy { findNavController(R.id.nav_host_fragment) }
 
-    var searchView: SearchView? = null
-    var listView: ListView? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,21 +26,6 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
         setupNavigationView()
 
         setupNavigation()
-
-        searchView = findViewById(R.id.action_search)
-
-        listView = findViewById(R.id.lv1);
-
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false;
-            }
-        })
     }
 
     private fun setupNavigation() {
