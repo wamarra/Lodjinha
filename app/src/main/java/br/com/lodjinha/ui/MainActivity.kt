@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.ActivityMainBinding
+import br.com.lodjinha.ui.components.FilterBottomSheetDialog
+import br.com.lodjinha.ui.components.FilterBottomSheetDialog.Companion.openBottomSheetDialog
 
 
 interface NavigationDelegate {
@@ -56,12 +58,37 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
                 R.id.productsListFragment -> {
                     binding.topAppBar.menu.findItem(R.id.filter).apply {
                         isVisible = true
+
+                        supportActionBar.apply {
+                            actionView?.setOnClickListener {
+
+                                FilterBottomSheetDialog().apply {
+                                    openBottomSheetDialog(
+                                        supportFragmentManager,
+                                        getFilterItems(),
+                                        onSelectionFinished()
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
                 else -> {
                 }
             }
         }
+    }
+
+    private fun onSelectionFinished(): (String, Int) -> Unit {
+        return { x: String, y: Int -> }
+    }
+
+    private fun getFilterItems(): ArrayList<String> {
+        val items = ArrayList<String>()
+        items.add("A - Z")
+        items.add("Z - A")
+        items.add("Original")
+        return items
     }
 
     private fun setupNavigationView() {

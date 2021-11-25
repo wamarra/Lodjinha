@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import br.com.lodjinha.databinding.BottomSheetFilterBinding
+import br.com.lodjinha.ui.adapters.FilterAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.io.Serializable
@@ -19,8 +22,7 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
     private var list: ArrayList<String> = arrayListOf()
     private var onSelectionFinished: ((String, Int) -> Unit)? = null
 
-    // TODO CREATE ADAPTER
-    // private lateinit var adapter: FilterAdapter
+    private lateinit var adapter: FilterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +42,6 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         return super.onCreateDialog(savedInstanceState)
     }
 
-
     override fun onStart() {
         super.onStart()
 
@@ -51,8 +52,17 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         behavior.state = BottomSheetBehavior.STATE_SETTLING
         behavior.isDraggable = true
 
+        setupFilterRv()
+        adapter.differ.submitList(list)
+    }
 
-        // TODO: Setar o adapter
+    private fun setupFilterRv() {
+        adapter = FilterAdapter()
+        binding.bottomviewRecyclerview.adapter = adapter
+        PagerSnapHelper().attachToRecyclerView(binding.bottomviewRecyclerview)
+        adapter.setOnItemClickListener { item ->
+            println("Clicou no item $item")
+        }
     }
 
     companion object {
@@ -60,6 +70,7 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         private const val ON_SELECTION_FINISHED_KEY = "OnSelectionFinished"
 
         fun Fragment.openBottomSheetDialog(
+            manager: FragmentManager,
             items: ArrayList<String>,
             onSelectionFinished: (String, Int) -> Unit
         ) {
@@ -70,7 +81,7 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
 
             val bottomSheetFragment = FilterBottomSheetDialog()
             bottomSheetFragment.arguments = bundle
-            bottomSheetFragment.show(parentFragmentManager, "BOTTOMSHHET")
+            bottomSheetFragment.show(manager, "BOTTOMSHHET")
         }
     }
 }
