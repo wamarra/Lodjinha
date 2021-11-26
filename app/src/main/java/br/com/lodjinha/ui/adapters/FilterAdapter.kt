@@ -17,6 +17,9 @@ class FilterAdapter :
 
         fun bind(title: String) {
             binding.bottomviewTitle.text = title
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(this.layoutPosition)
+            }
         }
     }
 
@@ -58,9 +61,9 @@ class FilterAdapter :
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ( (String) -> Unit )? = null
+    private var onItemClickListener: ( (Int) -> Unit )? = null
 
-    fun setOnItemClickListener(clickListener: (String) -> Unit ) {
+    fun setOnItemClickListener(clickListener: (Int) -> Unit ) {
         onItemClickListener = clickListener
     }
 }

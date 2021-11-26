@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import br.com.lodjinha.api.RetrofitInstance
 import br.com.lodjinha.databinding.FragmentProductsListBinding
+import br.com.lodjinha.models.GetProdutosCategoriaResponse
 import br.com.lodjinha.repositories.LodjinhaRepository
 import br.com.lodjinha.ui.NavigationDelegate
 import br.com.lodjinha.ui.adapters.ProductsCategoryAdapter
+import br.com.lodjinha.ui.components.FilterBottomSheetDialog.Companion.openBottomSheetDialog
 import br.com.lodjinha.ui.viewmodels.ProductCategoryViewModel
 import br.com.lodjinha.ui.viewmodels.ProductCategoryViewModelProviderFactory
 import br.com.lodjinha.utils.toggleVisibilty
@@ -94,11 +96,39 @@ class ProductsListFragment : Fragment() {
                     binding.progress.toggleVisibilty(false)
                     binding.produtosRv.toggleVisibilty(true)
                     if (viewState.data?.productsCategoryData.isNullOrEmpty().not()) {
-                        productsCategoryAdapter.differ.submitList(viewState.data?.productsCategoryData)
+                        var products = viewState.data?.productsCategoryData
+                        productsCategoryAdapter.differ.submitList(products)
+
+                        createSheetMenu(products)
                     }
                 }
             }
         }
+    }
+
+    private fun createSheetMenu(products: List<GetProdutosCategoriaResponse.ProdutoResponse>?) {
+        listener?.menuFilter?.apply {
+            setOnMenuItemClickListener {
+                openBottomSheetDialog(getFilterItems()) { _, id ->
+                    when (id) {
+                        0 -> {
+                            productsCategoryAdapter.differ.submitList(products?.sortedBy { it.nome })
+                        }
+                        1 -> {
+                            productsCategoryAdapter.differ.submitList(products?.sortedByDescending { it.nome })
+                        }
+                        2 -> {
+                            productsCategoryAdapter.differ.submitList(products)
+                        }
+                    }
+                }
+                return@setOnMenuItemClickListener true
+            }
+        }
+    }
+
+    private fun getFilterItems(): ArrayList<String> {
+        return arrayListOf("A - Z", "Z - A", "Original")
     }
 
     override fun onDestroyView() {

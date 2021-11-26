@@ -1,6 +1,7 @@
 package br.com.lodjinha.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -13,6 +14,7 @@ import br.com.lodjinha.ui.components.FilterBottomSheetDialog.Companion.openBotto
 
 interface NavigationDelegate {
     fun setToolbarTitle(title: String)
+    var menuFilter: MenuItem
 }
 
 class MainActivity : AppCompatActivity(), NavigationDelegate {
@@ -58,37 +60,13 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
                 R.id.productsListFragment -> {
                     binding.topAppBar.menu.findItem(R.id.filter).apply {
                         isVisible = true
-
-                        supportActionBar.apply {
-                            actionView?.setOnClickListener {
-
-                                FilterBottomSheetDialog().apply {
-                                    openBottomSheetDialog(
-                                        supportFragmentManager,
-                                        getFilterItems(),
-                                        onSelectionFinished()
-                                    )
-                                }
-                            }
-                        }
+                        menuFilter = this
                     }
                 }
                 else -> {
                 }
             }
         }
-    }
-
-    private fun onSelectionFinished(): (String, Int) -> Unit {
-        return { x: String, y: Int -> }
-    }
-
-    private fun getFilterItems(): ArrayList<String> {
-        val items = ArrayList<String>()
-        items.add("A - Z")
-        items.add("Z - A")
-        items.add("Original")
-        return items
     }
 
     private fun setupNavigationView() {
@@ -99,4 +77,9 @@ class MainActivity : AppCompatActivity(), NavigationDelegate {
     override fun setToolbarTitle(title: String) {
         binding.topAppBar.title = title
     }
+
+    override var menuFilter: MenuItem
+        get() = binding.topAppBar.menu.findItem(R.id.filter)
+        set(value) {}
+
 }

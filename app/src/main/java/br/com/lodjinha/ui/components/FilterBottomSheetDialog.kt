@@ -70,7 +70,6 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         private const val ON_SELECTION_FINISHED_KEY = "OnSelectionFinished"
 
         fun Fragment.openBottomSheetDialog(
-            manager: FragmentManager,
             items: ArrayList<String>,
             onSelectionFinished: (String, Int) -> Unit
         ) {
@@ -81,7 +80,7 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
 
             val bottomSheetFragment = FilterBottomSheetDialog()
             bottomSheetFragment.arguments = bundle
-            bottomSheetFragment.show(manager, "BOTTOMSHHET")
+            bottomSheetFragment.show(parentFragmentManager, "BOTTOMSHHET")
         }
     }
 }
