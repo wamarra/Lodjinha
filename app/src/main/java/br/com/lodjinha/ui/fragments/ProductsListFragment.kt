@@ -112,10 +112,10 @@ class ProductsListFragment : Fragment() {
                 openBottomSheetDialog(getFilterItems()) { _, id ->
                     when (id) {
                         0 -> {
-                            productsCategoryAdapter.differ.submitList(products?.sortedBy { it.nome })
+                            productsCategoryAdapter.differ.submitList(products?.sortedBy { it.descricao })
                         }
                         1 -> {
-                            productsCategoryAdapter.differ.submitList(products?.sortedByDescending { it.nome })
+                            productsCategoryAdapter.differ.submitList(products?.sortedByDescending { it.descricao })
                         }
                         2 -> {
                             productsCategoryAdapter.differ.submitList(products)

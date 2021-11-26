@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import br.com.lodjinha.databinding.BottomSheetFilterBinding
 import br.com.lodjinha.ui.adapters.FilterAdapter
@@ -52,16 +51,22 @@ class FilterBottomSheetDialog : BottomSheetDialogFragment() {
         behavior.state = BottomSheetBehavior.STATE_SETTLING
         behavior.isDraggable = true
 
-        setupFilterRv()
+        setupFilterRv(behavior)
         adapter.differ.submitList(list)
     }
 
-    private fun setupFilterRv() {
+    private fun setupFilterRv(behavior: BottomSheetBehavior<View>) {
         adapter = FilterAdapter()
         binding.bottomviewRecyclerview.adapter = adapter
         PagerSnapHelper().attachToRecyclerView(binding.bottomviewRecyclerview)
         adapter.setOnItemClickListener { item ->
+            onSelectionFinished?.let { it(list[item], item) }
+            behavior.state = BottomSheetBehavior.STATE_HIDDEN
             println("Clicou no item $item")
+        }
+
+        binding.bottomviewCancelButton.setOnClickListener {
+            behavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
     }
 

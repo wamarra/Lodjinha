@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.lodjinha.databinding.BottomSheetFilterBinding
+import br.com.lodjinha.databinding.SheetMenuItemBinding
 
 class FilterAdapter :
     ListAdapter<String, FilterAdapter.FilterViewHolder>(differCallback) {
 
     inner class FilterViewHolder(
-        private val binding: BottomSheetFilterBinding
+        private val binding: SheetMenuItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(title: String) {
-            binding.bottomviewTitle.text = title
+            binding.filterItem.text = title
             binding.root.setOnClickListener {
                 onItemClickListener?.invoke(this.layoutPosition)
             }
@@ -45,7 +45,7 @@ class FilterAdapter :
     val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterViewHolder {
-        val binding = BottomSheetFilterBinding.inflate(
+        val binding = SheetMenuItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

@@ -11,8 +11,7 @@
         android:layout_marginTop="-3dp"
         project:cardCornerRadius="3dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/card_bottomview">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottomview_layout"
@@ -32,7 +31,7 @@
                 android:textSize="@dimen/textsize_small"
                 android:visibility="visible"
                 android:text="Selecione:"
-                android:textColor="@color/black"
+                android:textColor="@color/primaryColor"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
