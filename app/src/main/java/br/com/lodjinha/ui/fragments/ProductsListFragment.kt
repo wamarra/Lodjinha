@@ -109,20 +109,11 @@ class ProductsListFragment : Fragment() {
     private fun createSheetMenu(products: List<GetProdutosCategoriaResponse.ProdutoResponse>?) {
         listener?.menuFilter?.apply {
             setOnMenuItemClickListener {
-                openBottomSheetDialog(getFilterItems()) { _, id ->
-                    when (id) {
-                        0 -> {
-                            productsCategoryAdapter.differ.submitList(products?.sortedBy { it.descricao })
-                        }
-                        1 -> {
-                            productsCategoryAdapter.differ.submitList(products?.sortedByDescending { it.descricao })
-                        }
-                        2 -> {
-                            productsCategoryAdapter.differ.submitList(products)
-                        }
-                    }
+                openBottomSheetDialog(getFilterItems()) { _, filterItemId ->
+                    val list = viewModel.sortList(filterItemId, products)
+                    productsCategoryAdapter.differ.submitList(list)
                 }
-                return@setOnMenuItemClickListener true
+                true
             }
         }
     }
