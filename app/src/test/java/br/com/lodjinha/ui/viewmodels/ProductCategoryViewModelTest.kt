@@ -1,7 +1,6 @@
 package br.com.lodjinha.ui.viewmodels
 
 import br.com.lodjinha.models.GetProdutosCategoriaResponse
-import br.com.lodjinha.repositories.LodjinhaRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.mockk
 import org.junit.Before
@@ -9,13 +8,12 @@ import org.junit.Test
 
 class ProductCategoryViewModelTest {
 
-    private lateinit var viewModel: ProductCategoryViewModel
-    private val repository: LodjinhaRepository = mockk()
+    private lateinit var viewModel: FilterBottomSheetViewModel
     private var originalList: List<GetProdutosCategoriaResponse.ProdutoResponse>? = null
 
     @Before
     fun setUp() {
-        viewModel = ProductCategoryViewModel(repository)
+        viewModel = FilterBottomSheetViewModel()
         originalList = listProducts();
     }
 

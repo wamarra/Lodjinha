@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import br.com.lodjinha.api.RetrofitInstance
@@ -13,6 +15,7 @@ import br.com.lodjinha.repositories.LodjinhaRepository
 import br.com.lodjinha.ui.NavigationDelegate
 import br.com.lodjinha.ui.adapters.ProductsCategoryAdapter
 import br.com.lodjinha.ui.components.FilterBottomSheetDialog.Companion.openBottomSheetDialog
+import br.com.lodjinha.ui.viewmodels.FilterBottomSheetViewModel
 import br.com.lodjinha.ui.viewmodels.ProductCategoryViewModel
 import br.com.lodjinha.ui.viewmodels.ProductCategoryViewModelProviderFactory
 import br.com.lodjinha.utils.toggleVisibilty
@@ -27,6 +30,8 @@ class ProductsListFragment : Fragment() {
     }
 
     private lateinit var productsCategoryAdapter: ProductsCategoryAdapter
+
+    private val filterBottomSheetViewModel: FilterBottomSheetViewModel by activityViewModels()
 
     private val viewModel: ProductCategoryViewModel by lazy {
         val repository = LodjinhaRepository(RetrofitInstance.apiService)
@@ -110,7 +115,7 @@ class ProductsListFragment : Fragment() {
         listener?.menuFilter?.apply {
             setOnMenuItemClickListener {
                 openBottomSheetDialog(getFilterItems()) { _, filterItemId ->
-                    val list = viewModel.sortList(filterItemId, products)
+                    val list = filterBottomSheetViewModel.sortList(filterItemId, products)
                     productsCategoryAdapter.differ.submitList(list)
                 }
                 true
