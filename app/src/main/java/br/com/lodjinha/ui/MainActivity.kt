@@ -8,8 +8,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.lodjinha.R
 import br.com.lodjinha.databinding.ActivityMainBinding
-import br.com.lodjinha.ui.components.FilterBottomSheetDialog
-import br.com.lodjinha.ui.components.FilterBottomSheetDialog.Companion.openBottomSheetDialog
 
 
 interface NavigationDelegate {

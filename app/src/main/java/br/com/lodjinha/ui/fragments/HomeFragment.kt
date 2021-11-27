@@ -16,7 +16,6 @@ import br.com.lodjinha.ui.adapters.CategoriasAdapter
 import br.com.lodjinha.ui.adapters.ProductsAdapter
 import br.com.lodjinha.ui.viewmodels.MainViewModel
 import br.com.lodjinha.ui.viewmodels.MainViewModelProviderFactory
-import br.com.lodjinha.utils.DialogUtils
 import br.com.lodjinha.utils.toggleVisibilty
 import android.content.Intent
 import android.net.Uri

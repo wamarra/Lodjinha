@@ -4,19 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.lodjinha.models.GetBannerResponse
-import br.com.lodjinha.models.GetCategoriaResponse
-import br.com.lodjinha.models.GetMaisVendidosResponse
 import br.com.lodjinha.models.GetProdutosCategoriaResponse
 import br.com.lodjinha.repositories.LodjinhaRepository
-import br.com.lodjinha.ui.viewstates.HomeData
-import br.com.lodjinha.ui.viewstates.HomeViewState
 import br.com.lodjinha.ui.viewstates.ProductCategoryViewState
 import br.com.lodjinha.ui.viewstates.ProductsCategoryData
 import br.com.lodjinha.utils.ResponseWrapper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlin.system.measureTimeMillis
 
 class ProductCategoryViewModel(
     private val repository: LodjinhaRepository
